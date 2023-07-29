@@ -1,0 +1,41 @@
+.modal {
+  z-index: 9999;
+}
+
+.modal .bg-black {
+  opacity: 0.5;
+}
+
+.modal .relative {
+  width: 100%;
+  max-width: 600px;
+}
+
+.modal .absolute {
+  top: 0;
+  right: 0;
+}
+
+.modal .bg-white {
+  padding: 20px;
+}
+
+.modal button {
+  cursor: pointer;
+}
+
+.modal .text-gray-500:hover {
+  color: gray;
+}
+
+.modal .bg-green-500 {
+  background-color: #48bb78;
+}
+
+.modal .bg-green-500:hover {
+  background-color: #38a169;
+}
+
+.modal button:focus {
+  outline: none;
+}

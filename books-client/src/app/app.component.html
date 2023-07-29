@@ -1,0 +1,190 @@
+<p>
+  <mat-toolbar color="primary">
+    <span>366-Books</span>
+  </mat-toolbar>
+</p>
+
+<mat-sidenav-container>
+  <mat-sidenav-content class="content mat-elevatin-z4">
+    <section class="text-gray-600 bg-gray-100 body-font">
+      <div class="container px-5 mx-auto max-w-7x1">
+        <div class="flex flex-wrap w-full mb-4 p-4">
+          <div class="w-full mb-6 lg:mb-0">
+            <h1
+              class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900"
+            >
+              Grab books
+            </h1>
+            <div class="h-1 w-60 bg-indigo-500 rounded"></div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap -m-4">
+          <ng-container *ngFor="let quote of data">
+            <div class="xl:w-1/3 md:w-1/2 p-4">
+              <div class="bg-white p-6 rounded-lg">
+                <img
+                  class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                  alt="Image Size 720x400"
+                />
+                <div class="flex justify-between">
+                  <h3
+                    class="tracking-widest text-indigo-500 text-xs font-medium title-font"
+                  >
+                    Author: {{ quote.title }}
+                  </h3>
+                  <h4
+                    style="text-overflow: ellipsis; display: -webkit-box"
+                    class="tracking-widest text-gray-800 text-sm"
+                  >
+                    {{ quote.genre }}
+                  </h4>
+                </div>
+                <h2
+                  class="text-lg text-gray-900 font-medium title-font mb-4 overflow-hidden"
+                >
+                  {{ quote.author }}
+                </h2>
+                <p class="leading-relaxed text-base"></p>
+                <div class="flex justify-between mt-4">
+                  <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+                    (click)="openModal()"
+                  >
+                    Buy
+                  </button>
+
+                  <div
+                    class="fixed z-10 inset-0 overflow-y-auto"
+                    *ngIf="showModal"
+                  >
+                    <div class="flex items-center justify-center min-h-screen">
+                      <div
+                        class="relative bg-white w-11/12 md:w-3/4 lg:w-1/2 rounded-lg shadow-lg"
+                      >
+                        <div class="absolute top-0 right-0 pt-4 pr-4">
+                          <button
+                            (click)="closeModal()"
+                            class="text-gray-500 hover:text-gray-700"
+                          >
+                            <svg
+                              class="h-6 w-6 fill-current"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M6.707 5.293a1 1 0 011.414 0L12 10.586l3.293-3.293a1 1 0 111.414 1.414L13.414 12l3.293 3.293a1 1 0 01-1.414 1.414L12 13.414l-3.293 3.293a1 1 0 01-1.414-1.414L10.586 12 7.293 8.707a1 1 0 010-1.414z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <div class="p-4 md:p-8">
+                          <p class="text-gray-700 text-lg mb-4">
+                            Are you sure you want to buy this book?
+                          </p>
+                          <button
+                            (click)="buyBook()"
+                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Yes, Buy it!
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fixed inset-0 bg-black opacity-50"></div>
+                  </div>
+                  <button
+                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Rent
+                  </button>
+                  <div
+                    class="fixed z-10 inset-0 overflow-y-auto"
+                    *ngIf="showBuyModal"
+                  >
+                    <div class="flex items-center justify-center min-h-screen">
+                      <div
+                        class="relative bg-white w-11/12 md:w-3/4 lg:w-1/2 rounded-lg shadow-lg"
+                      >
+                        <div class="absolute top-0 right-0 pt-4 pr-4">
+                          <button
+                            (click)="closeBuyModal()"
+                            class="text-gray-500 hover:text-gray-700"
+                          >
+                            <svg
+                              class="h-6 w-6 fill-current"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M6.707 5.293a1 1 0 011.414 0L12 10.586l3.293-3.293a1 1 0 111.414 1.414L13.414 12l3.293 3.293a1 1 0 01-1.414 1.414L12 13.414l-3.293 3.293a1 1 0 01-1.414-1.414L10.586 12 7.293 8.707a1 1 0 010-1.414z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <div class="p-4 md:p-8">
+                          <p class="text-gray-700 text-lg mb-4">
+                            Are you sure you want to buy this book?
+                          </p>
+                          <button
+                            (click)="buyBook()"
+                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Yes, Buy it!
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fixed inset-0 bg-black opacity-50"></div>
+                  </div>
+
+                  <div
+                    class="fixed z-10 inset-0 overflow-y-auto"
+                    *ngIf="showRentModal"
+                  >
+                    <div class="flex items-center justify-center min-h-screen">
+                      <div
+                        class="relative bg-white w-11/12 md:w-3/4 lg:w-1/2 rounded-lg shadow-lg"
+                      >
+                        <div class="absolute top-0 right-0 pt-4 pr-4">
+                          <button
+                            (click)="closeRentModal()"
+                            class="text-gray-500 hover:text-gray-700"
+                          >
+                            <svg
+                              class="h-6 w-6 fill-current"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M6.707 5.293a1 1 0 011.414 0L12 10.586l3.293-3.293a1 1 0 111.414 1.414L13.414 12l3.293 3.293a1 1 0 01-1.414 1.414L12 13.414l-3.293 3.293a1 1 0 01-1.414-1.414L10.586 12 7.293 8.707a1 1 0 010-1.414z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <div class="p-4 md:p-8">
+                          <p class="text-gray-700 text-lg mb-4">
+                            Are you sure you want to rent this book?
+                          </p>
+                          <button
+                            (click)="rentBook()"
+                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Yes, Rent it!
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fixed inset-0 bg-black opacity-50"></div>
+                  </div>
+                </div>
+                <span
+                  ><a class="text-blue-500" target="_blank"
+                    >read more....</a
+                  ></span
+                >
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+  </mat-sidenav-content>
+</mat-sidenav-container>
