@@ -1,0 +1,7 @@
+<main>
+  <section>
+    <app-books *ngIf="isBooksReturned" [bookList]="bookListObject"></app-books>
+  </section>
+
+  <div *ngIf="!isBooksReturned">L o a d i n g . . .</div>
+</main>

@@ -27,9 +27,18 @@ module.exports = {
 
 				autoAliases: true,
 
-				aliases: {},
+				aliases: {
+					aliases: {
+						"REST /books": "books",
 
-				callingOptions: {},
+						"POST /create": "books.create",
+						"GET /getAll": "books.getAll",
+						"GET /book/:id": "books.getBook",
+						"PUT /book/:id": "books.updateBook",
+						"DELETE /book/:id": "books.deleteBook",
+					},
+				},
+				cors: true,
 
 				bodyParsers: {
 					json: {

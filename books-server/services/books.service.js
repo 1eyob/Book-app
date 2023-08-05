@@ -5,7 +5,96 @@ const DbMixin = require("../mixins/db.mixin");
 module.exports = {
 	name: "books",
 	mixins: [DbMixin("books")],
+	settings: {
+		fields: [
+			"title",
+			"author",
+			"format",
+			"ISBN",
+			"format",
+			"description",
+			"genre",
+		],
+		// Validation schema for new books
+		entityValidator: {
+			title: { type: "string", min: 1 },
+			author: { type: "string", min: 1 },
+			ISBN: { type: "string", min: 1 },
+			format: { type: "string", min: 1 },
+			description: { type: "string", min: 1, optional: true },
+			genre: { type: "string", min: 1 },
+		},
+	},
 
+	actions: {
+		create: {
+			async handler(ctx) {
+				const data = ctx.params.body;
+				try {
+					const validation_result = await this.validateEntity(data);
+					const books = await this.adapter.insert(validation_result);
+					return books;
+				} catch (error) {
+					return {
+						status: 500,
+						message: "something went wrong",
+					};
+				}
+			},
+		},
+		getAll: {
+			params: {
+				limit: { type: "number", optional: true, convert: true },
+				offset: { type: "number", optional: true, convert: true },
+			},
+			async handler(ctx) {
+				const limit = ctx.params.limit ? Number(ctx.params.limit) : 20;
+				const offset = ctx.params.offset
+					? Number(ctx.params.offset)
+					: 0;
+
+				let params = {
+					limit,
+					offset,
+					sort: ["-createdAt"],
+				};
+				const books = await this.adapter.find(params);
+				return books;
+			},
+		},
+		updateBook: {
+			async handler(ctx) {
+				const bookId = ctx.params.id;
+				const bookData = ctx.params.body;
+				const book = await this.adapter.findById({ id: bookId });
+				if (!book) {
+					return {
+						status: 400,
+						message: "Book not found",
+					};
+				}
+				const updatedBook = await this.adapter.updateById(bookId, {
+					$set: bookData,
+				});
+				return updatedBook;
+			},
+		},
+
+		deleteBook: {
+			async handler(ctx) {
+				const bookId = ctx.params.id;
+
+				const book = await this.adapter.findById({ id: bookId });
+				if (!book) {
+					return {
+						status: 400,
+						message: "Book not found",
+					};
+				}
+				await this.adapter.deleteById(bookId);
+			},
+		},
+	},
 	methods: {
 		async seedBooksDB() {
 			await this.adapter.insertMany([
